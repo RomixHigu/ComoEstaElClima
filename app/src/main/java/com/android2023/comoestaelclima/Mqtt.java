@@ -1,7 +1,6 @@
 package com.android2023.comoestaelclima;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
 import org.eclipse.paho.android.service.MqttAndroidClient;
@@ -14,15 +13,27 @@ import org.eclipse.paho.client.mqttv3.MqttException;
 import org.eclipse.paho.client.mqttv3.MqttMessage;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Mqtt {
     private static final String TAG = "MQTT";
     private static final String MQTT_SERVER = "tcp://broker.emqx.io:1883";
     private static final String CLIENT_ID = "AndroidClima833";
     private static final String TOPIC = "iot/pfinal/romi/clima";
     private static String MESSAGE = "";
-    private static final int QOS = 2;
+    private static final int QOS = 0;
 
     private MqttAndroidClient mqttClient;
+    private List<MqttListener> listeners = new ArrayList<>();
+
+    public void addListener(MqttListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeListener(MqttListener listener) {
+        listeners.remove(listener);
+    }
 
     public Mqtt(Context context) {
         String clientId = CLIENT_ID + System.currentTimeMillis();
@@ -51,7 +62,12 @@ public class Mqtt {
             @Override
             public void messageArrived(String topic, MqttMessage message) throws Exception {
 
-                Log.d(TAG, "Message received: " + new String(message.getPayload()));
+                String receivedMessage = new String(message.getPayload());
+                Log.d(TAG, "Message received: " + receivedMessage);
+
+                if (messageReceivedListener != null) {
+                    messageReceivedListener.onMessageReceived(receivedMessage);
+                }
             }
 
             @Override
@@ -92,6 +108,12 @@ public class Mqtt {
         }
     }
 
+    void notifyListeners(String message) {
+        for (MqttListener listener : listeners) {
+            listener.onMessageReceived(message);
+        }
+    }
+
     public void subscribeToTopic() {
         try {
             mqttClient.subscribe(TOPIC, QOS, null, new IMqttActionListener() {
@@ -119,5 +141,16 @@ public class Mqtt {
                 e.printStackTrace();
             }
         }
+    }
+
+    // Recibir Mensaje De MQTT
+    private MessageReceivedListener messageReceivedListener;
+
+    public interface MessageReceivedListener {
+        void onMessageReceived(String message);
+    }
+
+    public void setMessageReceivedListener(MessageReceivedListener listener) {
+        this.messageReceivedListener = listener;
     }
 }
