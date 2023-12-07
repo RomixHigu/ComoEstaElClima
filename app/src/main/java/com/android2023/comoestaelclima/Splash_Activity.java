@@ -2,12 +2,16 @@ package com.android2023.comoestaelclima;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
 
 public class Splash_Activity extends AppCompatActivity {
-    private static final long SPLASH_DELAY = 3000;
+    private static final long SPLASH_DELAY = 5000;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

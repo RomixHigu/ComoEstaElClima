@@ -37,7 +37,6 @@
         android:id="@+id/txtT"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="----"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -64,7 +63,6 @@
         android:id="@+id/txtH"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="----"
         android:textSize="34sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -77,8 +75,7 @@
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="El clima está ideal para lavar ropa"
-        android:textColor="#FFFFFF"
+        android:textColor="#0F6FD5"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -86,5 +83,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.359" />
+
+    <TextView
+        android:id="@+id/txtRecibir"
+        android:layout_width="127dp"
+        android:layout_height="68dp"
+        android:text="Recibiendo datos..."
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.908"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.52" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

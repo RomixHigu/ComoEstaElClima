@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity{
         mqttManager = new Mqtt(getApplicationContext());
         mqttManager.connectToMqttBroker();
 
-
         // Recibir Mensaje de MQTT
         mqttManager.setMessageReceivedListener(new Mqtt.MessageReceivedListener() {
             @Override
@@ -47,20 +46,28 @@ public class MainActivity extends AppCompatActivity{
                 mensajeRec = message.split("-");
                 String t = mensajeRec[0];
                 String h = mensajeRec[1];
-                datoT.setText(t);
-                datoH.setText(h);
+                datoT.setText(t + "°C");
+                datoH.setText(h + "%");
                 diaSoleado(t);
             }
         });
     }
 
     //Compara temperatura y cambia fondo
+
     void diaSoleado(String dato){
+        TextView mensaje, recibir;
+        mensaje = findViewById(R.id.textView6);
+        recibir = findViewById(R.id.txtRecibir);
         float temp = Float.parseFloat(dato);
         Context context = this;
-        if (temp > 20.99){
+        if (temp > 21.00){
+            recibir.setText("");
+            mensaje.setText("El clima está ideal para lavar ropa");
             background.setImageResource(sunny);
         }else{
+            recibir.setText("");
+            mensaje.setText("Por hoy es mejor no lavar");
             background.setImageResource(R.drawable.rainy);
         }
     }
