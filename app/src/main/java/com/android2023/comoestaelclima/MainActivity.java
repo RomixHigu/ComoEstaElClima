@@ -38,12 +38,6 @@ public class MainActivity extends AppCompatActivity{
         mqttManager = new Mqtt(getApplicationContext());
         mqttManager.connectToMqttBroker();
 
-        datoT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mqttManager.publishMessage("22.00-23.99");
-            }
-        });
 
         // Recibir Mensaje de MQTT
         mqttManager.setMessageReceivedListener(new Mqtt.MessageReceivedListener() {
